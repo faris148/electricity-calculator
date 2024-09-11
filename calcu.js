@@ -94,3 +94,80 @@ function calculateBill() {
         <p>${text.mainMeterBill} ${mainMeterBill.toFixed(2)} ريال</p>
     `;
 }
+
+// إعداد خلفية الرموز الحسابية المتحركة باستخدام Three.js
+
+let scene, camera, renderer, particleSystem;
+
+function init() {
+    const background = document.getElementById('background');
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    // إعداد المشهد والكاميرا
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+    camera.position.z = 150; // تعديل للعمق
+
+    // إعداد المحرك
+    renderer = new THREE.WebGLRenderer({ alpha: true }); // تفعيل الشفافية
+    renderer.setSize(width, height);
+    background.appendChild(renderer.domElement);
+
+    // الرموز الحسابية
+    const symbols = ['+', '-', '=', '×', '÷'];
+    const particleCount = 150;
+    const particles = new THREE.BufferGeometry();
+    const particlePositions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+
+    for (let i = 0; i < particleCount; i++) {
+        const x = (Math.random() - 0.5) * 800;
+        const y = (Math.random() - 0.5) * 800;
+        const z = (Math.random() - 0.5) * 800;
+
+        particlePositions[i * 3] = x;
+        particlePositions[i * 3 + 1] = y;
+        particlePositions[i * 3 + 2] = z;
+
+        // تغيير الألوان إلى البنفسجي والأزرق والبرتقالي
+        colors[i * 3] = Math.random(); // R
+        colors[i * 3 + 1] = 0.5; // G
+        colors[i * 3 + 2] = 0.8 + Math.random() * 0.2; // B
+    }
+
+    particles.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+    particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    // إنشاء مادة الجسيمات (رموز حسابية متحركة)
+    const particleMaterial = new THREE.PointsMaterial({
+        size: 10,
+        vertexColors: true, // لتفعيل الألوان المتغيرة
+    });
+
+    particleSystem = new THREE.Points(particles, particleMaterial);
+    scene.add(particleSystem);
+
+    animate();
+}
+
+function animate() {
+    requestAnimationFrame(animate);
+
+    // حركة بطيئة للجسيمات
+    particleSystem.rotation.y += 0.001;
+
+    renderer.render(scene, camera);
+}
+
+// تحديث حجم الشاشة عند تغيير حجم النافذة
+window.addEventListener('resize', () => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    renderer.setSize(width, height);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+});
+
+init();
+
