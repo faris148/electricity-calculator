@@ -3,18 +3,22 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Poppins', sans-serif; /* الخط العصري */
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    background: linear-gradient(135deg, #395563, #003149); /* خلفية أغمق */
+    background: linear-gradient(135deg, #395563, #003149);
+    /* خلفية أغمق */
     color: #ffffff;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow-y: auto;
+    /* السماح بالتمرير العمودي */
     position: relative;
+    padding: 20px;
+    /* إضافة هوامش حتى يظهر المحتوى بالكامل */
 }
 
 /* خلفية متحركة عصرية ومشرقة */
@@ -25,8 +29,10 @@ body::before {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0)); /* جعل الخلفية المتحركة أكثر وضوحًا */
-    animation: rotateBg 15s infinite linear; /* جعل الحركة أبطأ قليلاً لتعطي إحساسًا بالاستمرارية */
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+    /* جعل الخلفية المتحركة أكثر وضوحًا */
+    animation: rotateBg 15s infinite linear;
+    /* جعل الحركة أبطأ قليلاً لتعطي إحساسًا بالاستمرارية */
     z-index: -1;
 }
 
@@ -34,6 +40,7 @@ body::before {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -43,13 +50,18 @@ body::before {
 .container {
     max-width: 600px;
     padding: 40px;
-    background-color: rgba(0, 6, 61, 0.774); /* خلفية شفافة */
+    background-color: rgba(0, 6, 61, 0.774);
+    /* خلفية شفافة */
     border-radius: 20px;
-    box-shadow: 20px 20px 20px rgba(27, 27, 27, 0.658); /* ظل أعمق */
-    backdrop-filter: blur(10px); /* تأثير الضبابية للخلفية */
+    box-shadow: 20px 20px 20px rgba(27, 27, 27, 0.658);
+    /* ظل أعمق */
+    backdrop-filter: blur(10px);
+    /* تأثير الضبابية للخلفية */
     animation: fadeInUp 1.5s ease forwards;
     opacity: 0;
     transform: translateY(50px);
+    margin-bottom: 20px;
+    /* ضمان وجود مسافة كافية أسفل الحاوية */
 }
 
 /* تأثيرات العناوين */
@@ -58,7 +70,8 @@ h1 {
     margin-bottom: 20px;
     color: #fff;
     font-size: 2.5em;
-    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.6); /* ظل عميق للعناوين */
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    /* ظل عميق للعناوين */
     animation: zoomIn 1s ease forwards;
 }
 
@@ -84,7 +97,8 @@ input {
 
 input:focus {
     background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.02); /* تأثير التكبير عند التركيز */
+    transform: scale(1.02);
+    /* تأثير التكبير عند التركيز */
 }
 
 /* تصميم الأزرار مع تأثيرات حديثة */
@@ -99,21 +113,26 @@ button {
     font-weight: bold;
     font-size: 1.1em;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 15px rgba(128, 128, 128, 0.705); /* ظل للأزرار */
+    box-shadow: 0 4px 15px rgba(128, 128, 128, 0.705);
+    /* ظل للأزرار */
 }
 
 button:hover {
-    transform: scale(1.05); /* تكبير عند التمرير */
-    box-shadow: 0 8px 20px rgba(0, 188, 212, 0.8); /* تعميق الظل عند التمرير */
+    transform: scale(1.05);
+    /* تكبير عند التمرير */
+    box-shadow: 0 8px 20px rgba(0, 188, 212, 0.8);
+    /* تعميق الظل عند التمرير */
 }
 
 /* تصميم النتائج */
 #results {
     margin-top: 20px;
     padding: 20px;
-    background: rgba(0, 188, 212, 0.8); /* خلفية شفافة */
+    background: rgba(0, 188, 212, 0.8);
+    /* خلفية شفافة */
     border-radius: 15px;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2); /* ظل عميق */
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+    /* ظل عميق */
     font-weight: bold;
     color: #ffffff;
     animation: fadeInUp 1.5s ease forwards;
@@ -127,8 +146,9 @@ button:hover {
         opacity: 0;
         transform: translateY(150px);
     }
+
     to {
-        opacity: 5;
+        opacity: 1;
         transform: translateY(0);
     }
 }
@@ -138,42 +158,13 @@ button:hover {
         opacity: 0;
         transform: scale(0.5);
     }
+
     to {
         opacity: 1;
         transform: scale(1);
     }
 }
-/* تأثير وميض الظل على الأزرار */
-button {
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, #0099ad, #009687);
-    color: rgb(0, 0, 0);
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1.1em;
-    box-shadow: 0 0 15px rgba(0, 188, 212, 0.5);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: glowing 2s infinite;
-    /* تطبيق الحركة */
-}
 
-/* تأثير الوميض */
-@keyframes glowing {
-    0% {
-        box-shadow: 0 0 10px rgba(0, 119, 134, 0.5), 0 0 20px rgba(0, 188, 212, 0.5);
-    }
-
-    50% {
-        box-shadow: 0 0 20px rgb(0, 78, 88), 0 0 30px rgba(0, 188, 212, 1);
-    }
-
-    100% {
-        box-shadow: 0 0 10px rgba(0, 188, 212, 0.5), 0 0 20px rgba(0, 120, 136, 0.514);
-    }
-}
 /* الخلفية المتحركة */
 #background {
     position: absolute;
@@ -184,100 +175,12 @@ button {
     z-index: -1;
     overflow: hidden;
 }
-/* إعدادات عامة */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-/* التأكد من أن التصميم يتكيف مع حجم الشاشة */
+/* تحسين التمرير */
 html,
 body {
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    font-family: 'Poppins', sans-serif;
-}
-
-/* حاوية التصميم الرئيسية */
-.container {
-    width: 95%;
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: rgba(0, 8, 54, 0.8);
-    border-radius: 15px;
-    box-shadow: 20 30px 30px rgb(53, 53, 53);
-    text-align: center;
-}
-
-/* تحسين تنسيق النصوص */
-h1 {
-    font-size: 6vw;
-    /* الحجم يتغير حسب عرض الشاشة */
-    color: #fff;
-    margin-bottom: 20px;
-}
-
-label,
-input,
-button {
-    width: 90%;
-    margin: 10px auto;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 4vw;
-    /* الحجم يتغير حسب عرض الشاشة */
-}
-
-input {
-    border: none;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    padding: 10px;
-}
-
-button {
-    background-color: #ff4081;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #ff1c61;
-}
-
-/* Media Query لتنسيق الشاشات الأكبر */
-@media (min-width: 768px) {
-    h1 {
-        font-size: 3vw;
-        /* حجم النص يتناسب مع الشاشات الكبيرة */
-    }
-
-    label,
-    input,
-    button {
-        font-size: 1.5vw;
-        /* تكبير النصوص للشاشات الأكبر */
-    }
-}
-html,
-body {
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    /* تمكين التمرير */
-    -webkit-overflow-scrolling: touch;
-    /* لتحسين التمرير على أجهزة iOS */
-}
-
-body {
-    touch-action: pan-y;
-    /* تمكين التمرير العمودي عبر اللمس */
-}
-html {
+    overflow-y: auto;
+    /* تمكين التمرير العمودي */
     scroll-behavior: smooth;
-    /* لتفعيل التمرير السلس */
+    /* تمرير سلس */
 }
