@@ -147,8 +147,8 @@ button:hover {
 button {
     width: 100%;
     padding: 15px;
-    background: linear-gradient(135deg, #00bcd4, #009688);
-    color: white;
+    background: linear-gradient(135deg, #0099ad, #009687);
+    color: rgb(0, 0, 0);
     border: none;
     border-radius: 50px;
     cursor: pointer;
@@ -163,15 +163,15 @@ button {
 /* تأثير الوميض */
 @keyframes glowing {
     0% {
-        box-shadow: 0 0 10px rgba(0, 188, 212, 0.5), 0 0 20px rgba(0, 188, 212, 0.5);
+        box-shadow: 0 0 10px rgba(0, 119, 134, 0.5), 0 0 20px rgba(0, 188, 212, 0.5);
     }
 
     50% {
-        box-shadow: 0 0 20px rgba(0, 188, 212, 1), 0 0 30px rgba(0, 188, 212, 1);
+        box-shadow: 0 0 20px rgb(0, 78, 88), 0 0 30px rgba(0, 188, 212, 1);
     }
 
     100% {
-        box-shadow: 0 0 10px rgba(0, 188, 212, 0.5), 0 0 20px rgba(0, 188, 212, 0.5);
+        box-shadow: 0 0 10px rgba(0, 188, 212, 0.5), 0 0 20px rgba(0, 120, 136, 0.514);
     }
 }
 /* الخلفية المتحركة */
@@ -183,4 +183,83 @@ button {
     height: 100%;
     z-index: -1;
     overflow: hidden;
+}
+/* إعدادات عامة */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* التأكد من أن التصميم يتكيف مع حجم الشاشة */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* حاوية التصميم الرئيسية */
+.container {
+    width: 95%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(0, 8, 54, 0.8);
+    border-radius: 15px;
+    box-shadow: 20 30px 30px rgb(53, 53, 53);
+    text-align: center;
+}
+
+/* تحسين تنسيق النصوص */
+h1 {
+    font-size: 6vw;
+    /* الحجم يتغير حسب عرض الشاشة */
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+label,
+input,
+button {
+    width: 90%;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 4vw;
+    /* الحجم يتغير حسب عرض الشاشة */
+}
+
+input {
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 10px;
+}
+
+button {
+    background-color: #ff4081;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ff1c61;
+}
+
+/* Media Query لتنسيق الشاشات الأكبر */
+@media (min-width: 768px) {
+    h1 {
+        font-size: 3vw;
+        /* حجم النص يتناسب مع الشاشات الكبيرة */
+    }
+
+    label,
+    input,
+    button {
+        font-size: 1.5vw;
+        /* تكبير النصوص للشاشات الأكبر */
+    }
 }
