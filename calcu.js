@@ -171,3 +171,52 @@ window.addEventListener('resize', () => {
 
 init();
 
+let startX, startY, endX, endY;
+
+// تتبع بداية لمس الشاشة
+document.addEventListener('touchstart', function(e) {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+});
+
+// تتبع نهاية لمس الشاشة وتحريك الصفحة
+document.addEventListener('touchmove', function(e) {
+    endX = e.touches[0].clientX;
+    endY = e.touches[0].clientY;
+
+    let deltaX = startX - endX;
+    let deltaY = startY - endY;
+
+    window.scrollBy(deltaX, deltaY);
+
+    startX = endX; // تحديث الإحداثيات للاستمرار بالحركة
+    startY = endY;
+});
+
+// تتبع السحب باستخدام الماوس
+let isMouseDown = false;
+
+document.addEventListener('mousedown', function(e) {
+    isMouseDown = true;
+    startX = e.clientX;
+    startY = e.clientY;
+});
+
+document.addEventListener('mousemove', function(e) {
+    if (isMouseDown) {
+        endX = e.clientX;
+        endY = e.clientY;
+
+        let deltaX = startX - endX;
+        let deltaY = startY - endY;
+
+        window.scrollBy(deltaX, deltaY);
+
+        startX = endX; // تحديث الإحداثيات للاستمرار بالحركة
+        startY = endY;
+    }
+});
+
+document.addEventListener('mouseup', function() {
+    isMouseDown = false;
+});
