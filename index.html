@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة فاتورة الكهرباء</title>
+    <link rel="stylesheet" href="calcu.css">
+</head>
+<body>
+    <div class="container">
+        <div class="language-selector">
+            <label for="language">اختر اللغة:</label>
+            <select id="language" onchange="changeLanguage()">
+                <option value="ar">العربية</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+
+        <h1 id="title">حاسبة فاتورة الكهرباء</h1>
+        <form id="electricity-form">
+            <label for="totalBill" id="totalBillLabel">إجمالي الفاتورة (بالريال):</label>
+            <input type="number" id="totalBill" required>
+
+            <label for="mainStart" id="mainStartLabel">قراءة العداد الرئيسي السابقة (كيلوواط):</label>
+            <input type="number" id="mainStart" required>
+
+            <label for="mainEnd" id="mainEndLabel">قراءة العداد الرئيسي الحالية (كيلوواط):</label>
+            <input type="number" id="mainEnd" required>
+
+            <label for="subStart" id="subStartLabel">قراءة العداد الفرعي السابقة (كيلوواط):</label>
+            <input type="number" id="subStart" required>
+
+            <label for="subEnd" id="subEndLabel">قراءة العداد الفرعي الحالية (كيلوواط):</label>
+            <input type="number" id="subEnd" required>
+
+            <button type="button" onclick="calculateBill()">احسب الفاتورة</button>
+        </form>
+
+        <div id="results"></div> <!-- عرض النتيجة النهائية -->
+    </div>
+
+    <script src="calcu.js"></script>
+</body>
+</html>
