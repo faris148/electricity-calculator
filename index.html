@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="ar">
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حاسبة فاتورة الكهرباء</title>
-    <link rel="stylesheet" href="calcu.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <!-- خلفية الرموز الحسابية المتحركة -->
+    <!-- خلفية متحركة -->
     <div id="background"></div>
 
+    <!-- الحاوية الرئيسية -->
     <div class="container">
+        <!-- اختيار اللغة -->
         <div class="language-selector">
             <label for="language">اختر اللغة:</label>
             <select id="language" onchange="changeLanguage()">
@@ -21,35 +24,46 @@
             </select>
         </div>
 
+        <!-- العنوان -->
         <h1 id="title">حاسبة فاتورة الكهرباء</h1>
+
+        <!-- نموذج حساب الفاتورة -->
         <form id="electricity-form">
-            <label for="totalBill" id="totalBillLabel">إجمالي الفاتورة (بالريال):</label>
-            <input type="number" id="totalBill" required>
+            <div class="form-group">
+                <label for="totalBill" id="totalBillLabel">إجمالي الفاتورة (بالريال):</label>
+                <input type="number" id="totalBill" required>
+            </div>
 
-            <label for="mainStart" id="mainStartLabel">قراءة العداد الرئيسي السابقة (كيلوواط):</label>
-            <input type="number" id="mainStart" required>
+            <div class="form-group">
+                <label for="mainStart" id="mainStartLabel">قراءة العداد الرئيسي السابقة (كيلوواط):</label>
+                <input type="number" id="mainStart" required>
+            </div>
 
-            <label for="mainEnd" id="mainEndLabel">قراءة العداد الرئيسي الحالية (كيلوواط):</label>
-            <input type="number" id="mainEnd" required>
+            <div class="form-group">
+                <label for="mainEnd" id="mainEndLabel">قراءة العداد الرئيسي الحالية (كيلوواط):</label>
+                <input type="number" id="mainEnd" required>
+            </div>
 
-            <label for="subStart" id="subStartLabel">قراءة العداد الفرعي السابقة (كيلوواط):</label>
-            <input type="number" id="subStart" required>
+            <div class="form-group">
+                <label for="subStart" id="subStartLabel">قراءة العداد الفرعي السابقة (كيلوواط):</label>
+                <input type="number" id="subStart" required>
+            </div>
 
-            <label for="subEnd" id="subEndLabel">قراءة العداد الفرعي الحالية (كيلوواط):</label>
-            <input type="number" id="subEnd" required>
+            <div class="form-group">
+                <label for="subEnd" id="subEndLabel">قراءة العداد الفرعي الحالية (كيلوواط):</label>
+                <input type="number" id="subEnd" required>
+            </div>
 
-            <button type="button" onclick="calculateBill()">احسب الفاتورة</button>
+            <button type="button" id="calculateButton" onclick="calculateBill()">احسب الفاتورة</button>
         </form>
 
-        <div id="results"></div> <!-- عرض النتيجة النهائية -->
+        <!-- النتائج -->
+        <div id="results"></div>
     </div>
-<!-- إضافة مكتبة Three.js -->
-    
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>    <script src="mathBackground.js"></script>
-    <script src="script.js"></script>
-    <script src="calcu.js"></script>
-        <script src="particles.js"></script>
-        <script src="script.js"></script>
 
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="app.js"></script>
 </body>
+
 </html>
