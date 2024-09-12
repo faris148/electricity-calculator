@@ -184,3 +184,9 @@ body {
     scroll-behavior: smooth;
     /* تمرير سلس */
 }
+.box {
+    width: 80%;
+    /* العرض سيصبح نسبة مئوية من الشاشة */
+    padding: 2em;
+    /* مسافة padding متناسبة مع حجم النص */
+}
