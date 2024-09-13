@@ -8,7 +8,7 @@
 
 /* خلفية الصفحة */
 body {
-    background: linear-gradient(135deg, #001aff, #000000, #001aff);
+    background: linear-gradient(135deg, #0000ff,  #000000, #0000ff );
     height: 100vh;
     display: flex;
     justify-content: center;
