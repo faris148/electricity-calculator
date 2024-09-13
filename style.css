@@ -8,7 +8,7 @@
 
 /* خلفية الصفحة */
 body {
-    background: linear-gradient(135deg, #550086, #00135e, #550086);
+    background: linear-gradient(135deg, #0033ff, #000000, #0033ff);
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -33,9 +33,12 @@ body {
     padding: 30px;
     border-radius: 20px;
     max-width: 400px;
+    /* العرض الأقصى للحاوية */
     width: 100%;
     color: #fff;
     text-align: center;
+    margin: 0 20px;
+    /* هوامش جانبية لتجنب التصاق الحاوية بالحواف */
 }
 
 /* اختيار اللغة */
@@ -96,15 +99,34 @@ body[dir="rtl"] {
 body[dir="ltr"] {
     direction: ltr;
 }
-/* الخلفية المتحركة */
-#background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    overflow: hidden;
-}
 
-/* بقية التصميم كما هو */
+/* تصغير الحاوية على شاشات الجوال */
+@media only screen and (max-width: 600px) {
+    .container {
+        max-width: 300px;
+        /* تصغير الحاوية */
+        padding: 20px;
+        /* تقليل حجم الحواف الداخلية */
+    }
+
+    h1 {
+        font-size: 1.5em;
+        /* تصغير حجم العنوان */
+    }
+
+    button {
+        font-size: 1em;
+        /* تقليل حجم النص في الأزرار */
+        padding: 12px;
+    }
+
+    input {
+        padding: 10px;
+        /* تصغير الحقول */
+    }
+
+    #results {
+        padding: 10px;
+        /* تقليل حجم النتائج */
+    }
+}
