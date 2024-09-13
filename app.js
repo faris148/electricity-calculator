@@ -90,8 +90,8 @@ function calculateBill() {
     // عرض النتائج النهائية
     document.getElementById("results").innerHTML = `
         <h3>${text.resultsHeader}</h3>
-        <p>${text.submeterBill} ${submeterBill.toFixed(2)} ريال</p>
         <p>${text.mainMeterBill} ${mainMeterBill.toFixed(2)} ريال</p>
+        <p>${text.submeterBill} ${submeterBill.toFixed(2)} ريال</p>
     `;
 }
 
