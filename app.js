@@ -157,3 +157,14 @@ window.addEventListener('resize', () => {
 
 // تفعيل الخلفية المتحركة
 initBackground();
+
+document.addEventListener("DOMContentLoaded", function() {
+    const container = document.querySelector(".container");
+    container.style.opacity = "0";
+    container.style.transform = "translateY(50px)";
+    setTimeout(() => {
+        container.style.transition = "all 1s ease";
+        container.style.opacity = "1";
+        container.style.transform = "translateY(0)";
+    }, 100); // يمكنك تغيير مدة التأخير كما تفضل
+});

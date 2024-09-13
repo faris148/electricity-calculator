@@ -8,7 +8,7 @@
 
 /* خلفية الصفحة */
 body {
-    background: linear-gradient(135deg, #0033ff, #000000, #0033ff);
+    background: linear-gradient(135deg, #001aff, #000000, #001aff);
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -29,22 +29,24 @@ body {
 
 /* الحاوية */
 .container {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 3, 26, 0.74);
     padding: 30px;
     border-radius: 20px;
     max-width: 400px;
     /* العرض الأقصى للحاوية */
     width: 100%;
-    color: #fff;
+    color: #ffffff;
     text-align: center;
     margin: 0 20px;
     /* هوامش جانبية لتجنب التصاق الحاوية بالحواف */
+    
+   
 }
 
 /* اختيار اللغة */
 .language-selector {
     margin-bottom: 20px;
-    text-align: right;
+    
 }
 
 /* العناوين */
@@ -56,7 +58,7 @@ h1 {
 /* الحقول */
 .form-group {
     margin-bottom: 15px;
-    text-align: left;
+    
 }
 
 input {
@@ -73,7 +75,7 @@ button {
     background-color: #00bcd4;
     border: none;
     border-radius: 5px;
-    color: white;
+    color: rgb(255, 255, 255);
     font-size: 1.1em;
     cursor: pointer;
     margin-top: 10px;
@@ -86,7 +88,7 @@ button:hover {
 /* النتائج */
 #results {
     margin-top: 20px;
-    background-color: rgba(0, 188, 212, 0.8);
+    background-color: rgba(0, 212, 18, 0.918);
     padding: 15px;
     border-radius: 10px;
 }
