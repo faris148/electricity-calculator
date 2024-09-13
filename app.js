@@ -109,8 +109,9 @@ function initBackground() {
     camera.position.z = 100;
 
     // إعداد المحرك
-    renderer = new THREE.WebGLRenderer({ alpha: true });
+    renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize(width, height);
+    renderer.setPixelRatio(window.devicePixelRatio); // تحسين دقة العرض
     background.appendChild(renderer.domElement);
 
     // إعداد الجسيمات
@@ -130,21 +131,34 @@ function initBackground() {
 
     particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
-    const material = new THREE.PointsMaterial({ color: 0x00bcd4, size: 2 });
+    const textureLoader = new THREE.TextureLoader();
+    const texture = textureLoader.load('rusted_shutter_ao_4k.jpg'); // تحسين الجودة باستخدام نسيج
+    const material = new THREE.PointsMaterial({ map: texture, size: 5, transparent: true });
+
     particleSystem = new THREE.Points(particles, material);
     scene.add(particleSystem);
+
+    // إضافة الإضاءة
+    const ambientLight = new THREE.AmbientLight(0x404040, 2); // إضاءة محيطة ناعمة
+    scene.add(ambientLight);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(0, 1, 0).normalize();
+    scene.add(directionalLight);
 
     animateBackground();
 }
 
-function animateBackground() {
-    requestAnimationFrame(animateBackground);
+let lastTime = 0;
+function animateBackground(time) {
+    const deltaTime = time - lastTime;
+    lastTime = time;
 
-    // حركة الجسيمات
-    particleSystem.rotation.x += 0.0005;
-    particleSystem.rotation.y += 0.001;
+    // تدوير الجسيمات بمعدل ثابت
+    particleSystem.rotation.x += 0.0003 * deltaTime;
+    particleSystem.rotation.y += 0.0001 * deltaTime;
 
     renderer.render(scene, camera);
+    requestAnimationFrame(animateBackground);
 }
 
 window.addEventListener('resize', () => {
@@ -168,5 +182,3 @@ document.addEventListener("DOMContentLoaded", function() {
         container.style.transform = "translateY(0)";
     }, 100); // يمكنك تغيير مدة التأخير كما تفضل
 });
-
-
