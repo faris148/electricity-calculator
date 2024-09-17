@@ -115,6 +115,17 @@ function calculateBill() {
 }
 
 // تشغيل الخادم على المنفذ 3000
-app.listen(3000, () => {
-    console.log('Server running on port 3000');
+app.listen(4000, () => {
+    console.log('Server running on port 4000');
 });
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html'); // إرسال ملف index.html عند الوصول إلى الجذر
+});
+
+const path = require('path');
+
+
+// خدمة الملفات الثابتة (static files)
+app.use(express.static(path.join(__dirname)));
+
