@@ -1,3 +1,21 @@
+// استيراد المكتبات اللازمة
+const express = require('express');
+const morgan = require('morgan'); // لتسجيل الطلبات
+const useragent = require('express-useragent'); // لتحليل بيانات المستخدم
+const bcrypt = require('bcrypt');
+
+// إنشاء تطبيق Express
+const app = express();
+
+// إعدادات التطبيق الأساسية
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// استخدام morgan لتسجيل الطلبات
+app.use(morgan('combined'));
+
+// استخدام useragent لتحليل بيانات المستخدم
+app.use(useragent.express());
 
 // النصوص باللغتين
 const translations = {
@@ -96,79 +114,7 @@ function calculateBill() {
     `;
 }
 
-
-// إعداد الخلفية المتحركة باستخدام Three.js
-let scene, camera, renderer, stars;
-
-function initBackground() {
-    const background = document.getElementById('background');
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-
-    // إعداد المشهد والكاميرا
-    scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-    camera.position.z = 1; // وضع الكاميرا
-
-    // إعداد المحرك
-    renderer = new THREE.WebGLRenderer({ alpha: true });
-    renderer.setSize(width, height);
-    background.appendChild(renderer.domElement);
-
-    // إعداد الجسيمات (Particles) كنجوم
-    const starGeometry = new THREE.BufferGeometry();
-    const starMaterial = new THREE.PointsMaterial({
-        color: 0xffffff, // لون النجوم أبيض
-        size: 0.001 // حجم الجسيمات (النجوم)
-    });
-
-    const starVertices = [];
-    for (let i = 0; i < 10000; i++) { // عدد الجسيمات (النجوم)
-        const x = (Math.random() - 0.5) * 2000;
-        const y = (Math.random() - 0.5) * 2000;
-        const z = (Math.random() - 0.5) * 2000;
-        starVertices.push(x, y, z);
-    }
-
-    starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
-
-    stars = new THREE.Points(starGeometry, starMaterial);
-    scene.add(stars);
-
-    animateBackground();
-}
-
-// دالة التحريك لتحديث النجوم
-function animateBackground() {
-    requestAnimationFrame(animateBackground);
-
-    // حركة دوران بسيطة للنجوم حول المحورين
-    stars.rotation.x += 0.0005;
-    stars.rotation.y += 0.0005;
-
-    renderer.render(scene, camera);
-}
-
-window.addEventListener('resize', () => {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    renderer.setSize(width, height);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
+// تشغيل الخادم على المنفذ 3000
+app.listen(3000, () => {
+    console.log('Server running on port 3000');
 });
-
-// تفعيل الخلفية المتحركة
-initBackground();
-
-// بقية الكود كما هو...
-document.addEventListener("DOMContentLoaded", function() {
-    const container = document.querySelector(".container");
-    container.style.opacity = "0";
-    container.style.transform = "translateY(50px)";
-    setTimeout(() => {
-        container.style.transition = "all 1s ease";
-        container.style.opacity = "1";
-        container.style.transform = "translateY(0)";
-    }, 100); // يمكنك تغيير مدة التأخير كما تفضل
-});
-
