@@ -95,8 +95,9 @@ function calculateBill() {
     `;
 }
 
+
 // إعداد الخلفية المتحركة باستخدام Three.js
-let scene, camera, renderer, particleSystem;
+let scene, camera, renderer, stars;
 
 function initBackground() {
     const background = document.getElementById('background');
@@ -106,59 +107,45 @@ function initBackground() {
     // إعداد المشهد والكاميرا
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-    camera.position.z = 100;
+    camera.position.z = 1; // وضع الكاميرا
 
     // إعداد المحرك
-    renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer = new THREE.WebGLRenderer({ alpha: true });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(window.devicePixelRatio); // تحسين دقة العرض
     background.appendChild(renderer.domElement);
 
-    // إعداد الجسيمات
-    const particleCount = 500;
-    const particles = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
+    // إعداد الجسيمات (Particles) كنجوم
+    const starGeometry = new THREE.BufferGeometry();
+    const starMaterial = new THREE.PointsMaterial({
+        color: 0xffffff, // لون النجوم أبيض
+        size: 0.001 // حجم الجسيمات (النجوم)
+    });
 
-    for (let i = 0; i < particleCount; i++) {
-        const x = (Math.random() - 0.5) * 400;
-        const y = (Math.random() - 0.5) * 400;
-        const z = (Math.random() - 0.5) * 400;
-
-        positions[i * 3] = x;
-        positions[i * 3 + 1] = y;
-        positions[i * 3 + 2] = z;
+    const starVertices = [];
+    for (let i = 0; i < 10000; i++) { // عدد الجسيمات (النجوم)
+        const x = (Math.random() - 0.5) * 2000;
+        const y = (Math.random() - 0.5) * 2000;
+        const z = (Math.random() - 0.5) * 2000;
+        starVertices.push(x, y, z);
     }
 
-    particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
 
-    const textureLoader = new THREE.TextureLoader();
-    const texture = textureLoader.load('rusted_shutter_ao_4k.jpg'); // تحسين الجودة باستخدام نسيج
-    const material = new THREE.PointsMaterial({ map: texture, size: 5, transparent: true });
-
-    particleSystem = new THREE.Points(particles, material);
-    scene.add(particleSystem);
-
-    // إضافة الإضاءة
-    const ambientLight = new THREE.AmbientLight(0x404040, 2); // إضاءة محيطة ناعمة
-    scene.add(ambientLight);
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(0, 1, 0).normalize();
-    scene.add(directionalLight);
+    stars = new THREE.Points(starGeometry, starMaterial);
+    scene.add(stars);
 
     animateBackground();
 }
 
-let lastTime = 0;
-function animateBackground(time) {
-    const deltaTime = time - lastTime;
-    lastTime = time;
+// دالة التحريك لتحديث النجوم
+function animateBackground() {
+    requestAnimationFrame(animateBackground);
 
-    // تدوير الجسيمات بمعدل ثابت
-    particleSystem.rotation.x += 0.0003 * deltaTime;
-    particleSystem.rotation.y += 0.0001 * deltaTime;
+    // حركة دوران بسيطة للنجوم حول المحورين
+    stars.rotation.x += 0.0005;
+    stars.rotation.y += 0.0005;
 
     renderer.render(scene, camera);
-    requestAnimationFrame(animateBackground);
 }
 
 window.addEventListener('resize', () => {
@@ -172,6 +159,7 @@ window.addEventListener('resize', () => {
 // تفعيل الخلفية المتحركة
 initBackground();
 
+// بقية الكود كما هو...
 document.addEventListener("DOMContentLoaded", function() {
     const container = document.querySelector(".container");
     container.style.opacity = "0";
@@ -182,3 +170,4 @@ document.addEventListener("DOMContentLoaded", function() {
         container.style.transform = "translateY(0)";
     }, 100); // يمكنك تغيير مدة التأخير كما تفضل
 });
+
