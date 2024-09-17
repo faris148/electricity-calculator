@@ -14,6 +14,7 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    
 }
 
 /* الخلفية المتحركة */
@@ -53,20 +54,23 @@ body {
 h1 {
     font-size: 2em;
     margin-bottom: 20px;
+    color: #ffffff;
 }
 
 /* الحقول */
 .form-group {
     margin-bottom: 15px;
     
+    
 }
 
 input {
     width: 100%;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 17px;
     border: none;
     margin-top: 5px;
+    
 }
 
 button {
@@ -74,7 +78,7 @@ button {
     padding: 15px;
     background-color: #00bcd4;
     border: none;
-    border-radius: 5px;
+    border-radius: 20px;
     color: rgb(255, 255, 255);
     font-size: 1.1em;
     cursor: pointer;
@@ -90,7 +94,7 @@ button:hover {
     margin-top: 20px;
     background-color: rgba(0, 212, 18, 0.918);
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 /* دعم الترجمة */
