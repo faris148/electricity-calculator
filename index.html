@@ -63,7 +63,7 @@
 
     <!-- JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="app.js"></script>
+    <script src="script.js"></script> <!-- تضمين script.js بدلاً من app.js -->
 
     <!-- إعداد الخلفية المتحركة -->
     <script>
@@ -77,7 +77,7 @@
             // إعداد المشهد والكاميرا
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-            camera.position.z = 1; // موضع الكاميرا
+            camera.position.z = 1;
 
             // إعداد المحرك
             renderer = new THREE.WebGLRenderer({ alpha: true });
@@ -87,12 +87,12 @@
             // إنشاء نقاط الجسيمات (Particles) كنجوم
             const starGeometry = new THREE.BufferGeometry();
             const starMaterial = new THREE.PointsMaterial({
-                color: 0xffffff, // لون النجوم أبيض
-                size: 0.007 // حجم الجسيمات (النجوم)
+                color: 0xffffff,
+                size: 0.007
             });
 
             const starVertices = [];
-            for (let i = 0; i < 10000; i++) { // عدد الجسيمات (النجوم)
+            for (let i = 0; i < 10000; i++) {
                 const x = (Math.random() - 0.5) * 2000;
                 const y = (Math.random() - 0.5) * 2000;
                 const z = (Math.random() - 0.5) * 2000;
@@ -100,25 +100,19 @@
             }
 
             starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
-
             stars = new THREE.Points(starGeometry, starMaterial);
             scene.add(stars);
 
             animate();
         }
 
-        // دالة التحريك لتحديث النجوم
         function animate() {
             requestAnimationFrame(animate);
-
-            // حركة دوران بسيطة للنجوم حول المحورين
             stars.rotation.x += 0.0005;
             stars.rotation.y += 0.0005;
-
             renderer.render(scene, camera);
         }
 
-        // إعادة تعيين حجم الخلفية عند تغيير حجم النافذة
         window.addEventListener('resize', () => {
             const width = window.innerWidth;
             const height = window.innerHeight;
@@ -127,9 +121,12 @@
             camera.updateProjectionMatrix();
         });
 
-        init(); // تفعيل الخلفية المتحركة
+        init();
     </script>
 
 </body>
+<script nonce="<%= res.locals.nonce %>">
+    // الكود الخاص بالجافا سكريبت المضمن
+</script>
 
 </html>

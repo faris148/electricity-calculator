@@ -1,6 +1,6 @@
 // security.js
 
-// 1. استيراد المكتبات اللازمة
+// استيراد المكتبات اللازمة
 const helmet = require('helmet'); // لحماية التطبيق من بعض هجمات الويب المعروفة
 const rateLimit = require('express-rate-limit'); // لتحديد حد أقصى للطلبات من نفس IP
 const xssClean = require('xss-clean'); // لحماية التطبيق من هجمات XSS
@@ -8,16 +8,16 @@ const mongoSanitize = require('express-mongo-sanitize'); // لمنع هجمات 
 const cors = require('cors'); // لتحديد سياسات مشاركة الموارد عبر المصادر
 const csrf = require('csurf'); // لحماية التطبيق من هجمات CSRF
 const session = require('express-session'); // لإدارة الجلسات بشكل آمن
-const RedisStore = require('connect-redis')(session); // تخزين الجلسات في Redis لتحسين الأمان والأداء
+const RedisStore = require('connect-redis').default; // الإصدار الجديد من connect-redis
 const redis = require('redis'); // عميل Redis
+const cookieParser = require('cookie-parser'); // إضافة مكتبة cookie-parser
 
 // إنشاء عميل Redis
 const redisClient = redis.createClient({
     host: 'localhost', // عنوان خادم Redis
     port: 6379, // منفذ Redis الافتراضي
-    // auth_pass: 'your-redis-password', // إذا كان لديك كلمة مرور لـ Redis
 });
- 
+
 // إعداد rate limiter
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 دقيقة
@@ -25,9 +25,13 @@ const limiter = rateLimit({
     message: 'Too many requests from this IP, please try again after 15 minutes',
 });
 
-// إعداد CSRF protection
+// إعداد CSRF protection مع الكوكيز
 const csrfProtection = csrf({
-    cookie: true, // استخدام الكوكيز لتخزين الـ CSRF tokens
+    cookie: {
+        httpOnly: true,
+        secure: false, // true إذا كنت تستخدم HTTPS
+        sameSite: 'strict',
+    }
 });
 
 // إعداد CORS
@@ -39,22 +43,25 @@ const corsOptions = {
 
 // تصدير دالة لتعزيز الأمان في التطبيق
 module.exports = (app) => {
-    // 2. استخدام Helmet لتأمين رؤوس HTTP
+    // استخدام Helmet لتأمين رؤوس HTTP
     app.use(helmet());
 
-    // 3. تطبيق CORS مع الخيارات المحددة
+    // استخدام cookie-parser
+    app.use(cookieParser());
+
+    // تطبيق CORS مع الخيارات المحددة
     app.use(cors(corsOptions));
 
-    // 4. تطبيق rate limiter على جميع الطلبات
+    // تطبيق rate limiter على جميع الطلبات
     app.use(limiter);
 
-    // 5. تنظيف البيانات المدخلة من هجمات XSS
+    // تنظيف البيانات المدخلة من هجمات XSS
     app.use(xssClean());
 
-    // 6. تنظيف البيانات المدخلة من هجمات MongoDB Injection
+    // تنظيف البيانات المدخلة من هجمات MongoDB Injection
     app.use(mongoSanitize());
 
-    // 7. إعداد إدارة الجلسات باستخدام Redis
+    // إعداد إدارة الجلسات باستخدام Redis
     app.use(session({
         store: new RedisStore({ client: redisClient }),
         secret: 'your-very-secure-secret', // استخدم مفتاحًا سريًا قويًا
@@ -68,10 +75,10 @@ module.exports = (app) => {
         },
     }));
 
-    // 8. تطبيق CSRF protection بعد إدارة الجلسات
+    // تطبيق CSRF protection بعد إدارة الجلسات
     app.use(csrfProtection);
 
-    // 9. التعامل مع أخطاء CSRF
+    // التعامل مع أخطاء CSRF
     app.use((err, req, res, next) => {
         if (err.code !== 'EBADCSRFTOKEN') return next(err);
 
@@ -80,29 +87,35 @@ module.exports = (app) => {
         res.send('Form tampered with');
     });
 
-    // 10. إعداد CSP (Content Security Policy) لمنع تحميل محتوى ضار
-    app.use(
-        helmet.contentSecurityPolicy({
-            directives: {
-                defaultSrc: ["'self'"],
-                scriptSrc: ["'self'", 'https://cdnjs.cloudflare.com'],
-                styleSrc: ["'self'", 'https://fonts.googleapis.com'],
-                fontSrc: ["'self'", 'https://fonts.gstatic.com'],
-                imgSrc: ["'self'", 'data:', 'https://yourdomain.com'],
-                connectSrc: ["'self'"],
-                objectSrc: ["'none'"],
-                upgradeInsecureRequests: [],
-            },
-        })
-    );
+   const crypto = require('crypto');
 
-    // 11. إضافة حماية ضد Clickjacking
+app.use((req, res, next) => {
+    res.locals.nonce = crypto.randomBytes(16).toString('hex'); // إنشاء رقم مميز (nonce)
+    next();
+});
+
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", 'https://cdnjs.cloudflare.com', (req, res) => `'nonce-${res.locals.nonce}'`], // السماح بالجافا سكريبت مع nonce
+            styleSrc: ["'self'", 'https://fonts.googleapis.com'],
+            fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+            imgSrc: ["'self'", 'data:', 'https://yourdomain.com'],
+            connectSrc: ["'self'"],
+            objectSrc: ["'none'"],
+            upgradeInsecureRequests: [],
+        },
+    })
+);
+
+    // إضافة حماية ضد Clickjacking
     app.use(
         helmet.frameguard({
             action: 'deny',
         })
     );
 
-    // 12. إزالة X-Powered-By header
+    // إزالة X-Powered-By header
     app.disable('x-powered-by');
 };

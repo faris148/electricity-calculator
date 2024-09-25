@@ -8,13 +8,12 @@
 
 /* خلفية الصفحة */
 body {
-    background: linear-gradient(135deg, #0000ff,  #000000, #0000ff );
+    background: linear-gradient(135deg, #0000ff, #000000, #0000ff);
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    
+    /* إزالة overflow: hidden لتمكين التمرير */
 }
 
 /* الخلفية المتحركة */
@@ -25,7 +24,6 @@ body {
     width: 100%;
     height: 100%;
     z-index: -1;
-    overflow: hidden;
 }
 
 /* الحاوية */
@@ -34,20 +32,19 @@ body {
     padding: 30px;
     border-radius: 20px;
     max-width: 400px;
-    /* العرض الأقصى للحاوية */
     width: 100%;
+    min-height: 100vh;
+    /* لضمان ملء الشاشة بالكامل */
+    overflow-y: auto;
+    /* السماح بالتمرير العمودي */
     color: #ffffff;
     text-align: center;
     margin: 0 20px;
-    /* هوامش جانبية لتجنب التصاق الحاوية بالحواف */
-    
-   
 }
 
 /* اختيار اللغة */
 .language-selector {
     margin-bottom: 20px;
-    
 }
 
 /* العناوين */
@@ -60,8 +57,6 @@ h1 {
 /* الحقول */
 .form-group {
     margin-bottom: 15px;
-    
-    
 }
 
 input {
@@ -70,7 +65,6 @@ input {
     border-radius: 17px;
     border: none;
     margin-top: 5px;
-    
 }
 
 button {
@@ -110,29 +104,23 @@ body[dir="ltr"] {
 @media only screen and (max-width: 600px) {
     .container {
         max-width: 300px;
-        /* تصغير الحاوية */
         padding: 20px;
-        /* تقليل حجم الحواف الداخلية */
     }
 
     h1 {
         font-size: 1.5em;
-        /* تصغير حجم العنوان */
     }
 
     button {
         font-size: 1em;
-        /* تقليل حجم النص في الأزرار */
         padding: 12px;
     }
 
     input {
         padding: 10px;
-        /* تصغير الحقول */
     }
 
     #results {
         padding: 10px;
-        /* تقليل حجم النتائج */
     }
 }
